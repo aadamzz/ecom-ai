@@ -1,65 +1,89 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ProductCard } from "@/components/product/product-card";
+import { categories, products } from "@/data/products";
+import { ArrowRight } from "lucide-react";
+import { OpenChatButton } from "@/components/chat/OpenChatButton";
 
-export default function Home() {
+export default function HomePage() {
+  const featured = products.slice(0, 8);
+  const onSale = products.filter((p) => p.salePrice);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div>
+      {/* Hero */}
+      <section className="relative flex min-h-[70vh] items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-800 text-white">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-5" />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
+          <p className="mb-4 text-sm font-medium uppercase tracking-widest text-neutral-400">
+            AI-Powered Fashion
           </p>
+          <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
+            NØRD
+          </h1>
+          <p className="mt-6 text-lg text-neutral-300 sm:text-xl">
+            Your personal AI stylist. Tell us what you need — we'll build you an outfit.
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link href="/products" className="inline-flex h-11 items-center justify-center rounded-lg bg-white px-8 text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-200">
+              Browse Collection
+            </Link>
+            <OpenChatButton />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Categories */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight">Categories</h2>
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
+          {categories.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/products?category=${cat.slug}`}
+              className="group flex flex-col items-center rounded-xl border bg-card p-6 transition-all hover:shadow-md hover:border-foreground/20"
+            >
+              <span className="text-3xl mb-3">
+                {cat.slug === "tops" && "👕"}
+                {cat.slug === "bottoms" && "👖"}
+                {cat.slug === "shoes" && "👟"}
+                {cat.slug === "outerwear" && "🧥"}
+                {cat.slug === "accessories" && "⌚"}
+              </span>
+              <span className="font-semibold">{cat.name}</span>
+              <span className="mt-1 text-xs text-muted-foreground text-center">{cat.description}</span>
+            </Link>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Featured Products */}
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold tracking-tight">Bestsellers</h2>
+          <Link href="/products" className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            View All <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {featured.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* On Sale */}
+      {onSale.length > 0 && (
+        <section className="bg-muted/30">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold tracking-tight text-red-600">Sale 🔥</h2>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {onSale.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

@@ -43,5 +43,5 @@ export function getFeaturedProducts(limit = 8): Product[] {
 }
 
 export function formatPrice(price: number): string {
-  return `${price.toFixed(0)} zł`;
+  return `$${price.toFixed(0)}`;
 }
