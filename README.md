@@ -1,3 +1,14 @@
+
+# 🛒 Ecom-AI Demo
+
+👉 **Live demo:** [https://gleeful-sorbet-f51939.netlify.app/](https://gleeful-sorbet-f51939.netlify.app/)
+
+[![Demo Video](https://img.youtube.com/vi/Vgs_yJ25LfU/0.jpg)](https://youtube.com/shorts/Vgs_yJ25LfU?feature=share)
+
+▶️ [Zobacz demo na YouTube](https://youtube.com/shorts/Vgs_yJ25LfU?feature=share)
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
