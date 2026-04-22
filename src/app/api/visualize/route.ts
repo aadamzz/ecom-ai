@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     .map((product) => {
       const imagePath = product.images[0]; // e.g. "/products/01-linen-shirt-oversize.png"
       const filePath = path.join(process.cwd(), "public", imagePath);
-      if (!fs.existsSync(filePath)) return null;
+      if (!fs.existsSync(filePath)) return undefined;
       const buffer = fs.readFileSync(filePath);
       return {
         inlineData: {
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         },
       };
     })
-    .filter(Boolean);
+    .filter((part): part is { inlineData: { data: string; mimeType: "image/png" } } => part !== undefined);
 
   if (!imageParts.length) {
     return NextResponse.json({ error: "Could not read product images" }, { status: 500 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, type ReactNode, type ReactElement } from "react";
 import { createClient } from "@/lib/supabase";
 import { useAuth } from "@/store/authStore";
 
@@ -16,7 +16,7 @@ const WishlistContext = createContext<WishlistContextValue>({
   isWishlisted: () => false,
 });
 
-export function WishlistProvider({ children }: { children: ReactNode }): JSX.Element {
+export function WishlistProvider({ children }: { children: ReactNode }): ReactElement {
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const { user } = useAuth();
   const supabase = createClient();

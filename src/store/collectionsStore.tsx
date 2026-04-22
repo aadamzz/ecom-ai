@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, type ReactNode, type ReactElement } from "react";
 import { createClient } from "@/lib/supabase";
 import { useAuth } from "@/store/authStore";
 
@@ -23,7 +23,7 @@ const CollectionsContext = createContext<CollectionsContextValue>({
   removeCollection: async () => {},
 });
 
-export function CollectionsProvider({ children }: { children: ReactNode }): JSX.Element {
+export function CollectionsProvider({ children }: { children: ReactNode }): ReactElement {
   const [collections, setCollections] = useState<Collection[]>([]);
   const { user } = useAuth();
   const supabase = createClient();
